@@ -14,6 +14,10 @@ const hodSchema = new mongoose.Schema({
     type: "string",
     required: true,
   },
+  password: {
+    type: "string",
+    required: false,
+  },
   permissionRecords: {
     type: "array",
     required: false,

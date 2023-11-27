@@ -6,6 +6,8 @@ import {
   getHOD,
   grantedRequest,
   rejectedRequest,
+  signIn,
+  signUp,
 } from "../Controls/hod.js";
 const router = express.Router();
 
@@ -20,5 +22,9 @@ router.post("/granted/:id", grantedRequest);
 router.post("/rejected/:id", rejectedRequest);
 
 router.delete("/:id", deleteHOD);
+
+router.post("/login", signIn);
+
+router.post("/signup", signUp);
 
 export default router;

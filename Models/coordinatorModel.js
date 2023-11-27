@@ -14,6 +14,10 @@ const facultySchema = new mongoose.Schema(
       required: false,
       // default: 0,
     },
+    password: {
+      type: "string",
+      required: false,
+    },
     permissionLetter: {
       type: "string",
       required: false,

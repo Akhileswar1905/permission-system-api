@@ -4,8 +4,14 @@ import {
   deleteCoordinator,
   getAllCoordinators,
   getCoordinator,
+  signIn,
+  signUp,
 } from "../Controls/coordinator.js";
 const router = express.Router();
+
+router.post("/signup", signUp);
+
+router.post("/login", signIn);
 
 router.get("/", getAllCoordinators);
 

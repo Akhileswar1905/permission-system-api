@@ -9,19 +9,23 @@ const studentSchema = new mongoose.Schema(
     rollNo: {
       type: "string",
       required: true,
+      unique: true,
+    },
+    password: {
+      type: "string",
+      required: false,
     },
     subject: {
       type: "string",
-      required: true,
-      default: 0,
+      required: false,
     },
     permissionLetter: {
       type: "string",
-      required: true,
+      required: false,
     },
     documents: {
       type: "string",
-      required: true,
+      required: false,
     },
     classAndSection: {
       type: "string",

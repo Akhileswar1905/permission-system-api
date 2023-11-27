@@ -77,3 +77,46 @@ export const deleteHOD = async (req, res) => {
     res.status(500).json({ error: "Something went wrong" });
   }
 };
+
+export const signIn = async (req, res) => {
+  try {
+    const { rollNo, password } = req.body;
+    const hod = await hodModel.findOne({ rollNo: rollNo });
+    if (!hod) {
+      return res.status(404).json({ error: "hodModel not found" });
+    }
+    if (hod.password !== password) {
+      return res.status(401).json({ error: "Incorrect password" });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "hodModel logged in successfully",
+      hod,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Something went wrong" });
+  }
+};
+
+export const signUp = async (req, res) => {
+  try {
+    const { rollNo } = req.body;
+    const existinghodModel = await hodModel.findOne({
+      rollNo: rollNo,
+    });
+    if (existinghodModel) {
+      return res.status(409).json({ error: "hodModel already exists" });
+    }
+    const hod = await hodModel.create(req.body);
+
+    res.status(200).json({
+      status: "success",
+      message: "hodModel created successfully",
+      hod,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "error", message: "Something went wrong" });
+  }
+};
