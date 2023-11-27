@@ -164,7 +164,21 @@ export const rejectedRequest = async (req, res) => {
       return record.rollNo !== student.rollNo;
     });
     faculty.permissionRecords.push(student);
+
     await faculty.save();
+
+    const dept = faculty.dept;
+    console.log(dept);
+    const hod = await hodModel.findOne({ dept: dept });
+
+    console.log(faculty, hod);
+    hod.permissionRecords = hod.permissionRecords.filter((record) => {
+      return record.rollNo !== student.rollNo;
+    });
+    hod.permissionRecords.push(student);
+    console.log(hod.permissionRecords);
+    await hod.save();
+
     res.status(200).json({ data: student.permissionRecords });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
