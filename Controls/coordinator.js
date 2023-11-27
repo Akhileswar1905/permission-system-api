@@ -78,7 +78,7 @@ export const signUp = async (req, res) => {
     }
     const faculty = await coordinatorModel.create(req.body);
     const classAndSection = req.body.classAndSection;
-    const dept = classAndSection.split("-")[0];
+    const dept = req.body.dept;
     console.log(dept);
     const hod = await hodModel.findOne({ dept: dept });
     console.log(hod);
