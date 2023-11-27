@@ -196,6 +196,7 @@ export const grantedRequest = async (req, res) => {
     await faculty.save();
 
     const dept = faculty.dept;
+    console.log(dept);
     const hod = await hodModel.findOne({ dept: dept });
 
     console.log(faculty, hod);
