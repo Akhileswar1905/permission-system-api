@@ -193,6 +193,8 @@ export const grantedRequest = async (req, res) => {
       return record.rollNo !== student.rollNo;
     });
     faculty.permissionRecords.push(student);
+    await faculty.save();
+
     const dept = faculty.dept;
     const hod = await hodModel.findOne({ dept: dept });
     console.log(faculty.permissionRecords, hod);
@@ -201,7 +203,6 @@ export const grantedRequest = async (req, res) => {
     });
     hod.permissionRecords.push(student);
     console.log(hod.permissionRecords);
-    await faculty.save();
     await hod.save();
 
     res.status(200).json({ data: student.permissionRecords });
