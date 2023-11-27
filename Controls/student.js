@@ -189,6 +189,7 @@ export const grantedRequest = async (req, res) => {
     const faculty = await facultyModel.findOne({
       classAndSection: student.classAndSection,
     });
+    console.log(faculty);
     faculty.permissionRecords = faculty.permissionRecords.filter((record) => {
       return record.rollNo !== student.rollNo;
     });
@@ -197,6 +198,8 @@ export const grantedRequest = async (req, res) => {
 
     const dept = faculty.dept;
     const hod = await hodModel.findOne({ dept: dept });
+    console.log(hod);
+
     console.log(faculty.permissionRecords, hod);
     hod.permissionRecords = hod.permissionRecords.filter((record) => {
       return record.rollNo !== student.rollNo;
