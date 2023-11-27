@@ -100,7 +100,10 @@ export const forwardToHOD = async (req, res) => {
       return record.id !== id;
     });
     const { classAndSection } = student;
-    const dept = classAndSection.substring(0, classAndSection.length - 2);
+    const faculty = await facultyModel.findOne({
+      classAndSection: student.classAndSection,
+    });
+    const dept = faculty.dept;
     const hod = await hodModel.findOne({ dept: dept });
 
     console.log(hod);
@@ -128,9 +131,6 @@ export const forwardToHOD = async (req, res) => {
     hod.permissionRecords.push(student);
     await hod.save();
     console.log(hod, student);
-    const faculty = await facultyModel.findOne({
-      classAndSection: student.classAndSection,
-    });
     faculty.permissionRecords = faculty.permissionRecords.filter((record) => {
       return record.rollNo !== student.rollNo;
     });
