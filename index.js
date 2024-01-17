@@ -1,10 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
-import studentRouter from "./Routes/student.js";
-import coordinarRouter from "./Routes/coordinator.js";
-import hodRouter from "./Routes/hod.js";
-import cors from "cors";
 import dotenv from "dotenv";
+import cors from "cors";
+import userRouter from "./Routes/controls.js";
 dotenv.config();
 
 // Initializing express app
@@ -16,10 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 // Routes
-app.use("/student", studentRouter);
-app.use("/faculty", coordinarRouter);
-app.use("/hod", hodRouter);
-
+app.use("/user", userRouter);
 // Homepage route
 app.get("/", (req, res) => {
   res.send("Hello from API");
