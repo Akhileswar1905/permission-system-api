@@ -1,6 +1,7 @@
 import Person from "../Models/PersonModel.js";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
+import { sendNotification } from "./Messaging.js";
 
 // SignUp
 export const SignUp = async (req, res) => {
@@ -115,6 +116,14 @@ export const permissionReq = async (req, res) => {
     user.permissionRequests.push(request);
 
     await user.save();
+
+    // Send notification to receiver
+    sendNotification(
+      user.fcmToken,
+      "Permission Request",
+      "You have a new request"
+    );
+
     res.status(200).json({ message: "Permission requested" });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
@@ -142,6 +151,13 @@ export const grantedPermission = async (req, res) => {
     user.permissionRequests.push(req.body);
     await user.save();
 
+    // Send notification to sender
+    sendNotification(
+      sendingPerson.fcmToken,
+      "Permission Granted",
+      "Your permission request has been granted"
+    );
+
     res.status(200).json({ data: sendingPerson.permissionRecords });
   } catch (error) {
     res.status(500).json({ error: "Something went wrong" });
@@ -168,6 +184,13 @@ export const rejectedPermission = async (req, res) => {
     });
     user.permissionRequests.push(req.body);
     await user.save();
+
+    // Send notification to sender
+    sendNotification(
+      sendingPerson.fcmToken,
+      "Permission Rejected",
+      "Your permission request has been rejected"
+    );
 
     res.status(200).json({ data: sendingPerson.permissionRecords });
   } catch (error) {
