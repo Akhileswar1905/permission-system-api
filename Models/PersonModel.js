@@ -61,11 +61,10 @@ const PersonSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  fcmToken:{
+  fcmToken: {
     type: String,
     required: true,
-  
-  }
+  },
   receiver: {
     type: String,
     required: false,
